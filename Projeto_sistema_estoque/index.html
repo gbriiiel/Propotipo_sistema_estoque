@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controle de estoque</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topo">
+  <h1>Controle de estoque</h1>
+  <p>Cadastre itens, registre entradas e saídas e veja o que precisa ser reposto.</p>
+</header>
+
+<main>
+  <section class="resumo" aria-label="Resumo do estoque">
+    <div><strong id="r-itens">0</strong><span>itens cadastrados</span></div>
+    <div><strong id="r-unid">0</strong><span>unidades em estoque</span></div>
+    <div class="alerta"><strong id="r-crit">0</strong><span>abaixo do mínimo</span></div>
+  </section>
+
+  <div class="colunas">
+    <aside>
+      <form id="form-item" autocomplete="off">
+        <h2>Cadastrar item</h2>
+        <label>Código<input id="i-cod" required maxlength="20"></label>
+        <label>Nome<input id="i-nome" required maxlength="60"></label>
+        <label>Categoria<input id="i-cat" maxlength="40"></label>
+        <label>Localização<input id="i-loc" maxlength="30" placeholder="Ex.: Corredor B, prateleira 3"></label>
+        <div class="par">
+          <label>Quantidade inicial<input id="i-qtd" type="number" min="0" value="0" required></label>
+          <label>Estoque mínimo<input id="i-min" type="number" min="0" value="0" required></label>
+        </div>
+        <button type="submit">Cadastrar item</button>
+        <p class="aviso" id="aviso-item" role="status"></p>
+      </form>
+
+      <form id="form-mov">
+        <h2>Registrar movimentação</h2>
+        <label>Item<select id="m-item" required></select></label>
+        <div class="par">
+          <label>Tipo<select id="m-tipo"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></label>
+          <label>Quantidade<input id="m-qtd" type="number" min="1" value="1" required></label>
+        </div>
+        <label>Responsável<input id="m-resp" required maxlength="40"></label>
+        <button type="submit">Registrar movimentação</button>
+        <p class="aviso" id="aviso-mov" role="status"></p>
+      </form>
+    </aside>
+
+    <section class="lista">
+      <div class="barra">
+        <input id="busca" type="search" placeholder="Buscar por código, nome ou categoria" aria-label="Buscar item">
+        <label class="check"><input id="so-criticos" type="checkbox"> Só itens abaixo do mínimo</label>
+      </div>
+      <div class="rolagem">
+        <table>
+          <thead><tr><th>Código</th><th>Item</th><th>Categoria</th><th>Local</th><th class="num">Saldo</th><th class="num">Mínimo</th><th>Situação</th><th></th></tr></thead>
+          <tbody id="corpo"></tbody>
+        </table>
+      </div>
+      <h2>Últimas movimentações</h2>
+      <ul id="historico"></ul>
+    </section>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
